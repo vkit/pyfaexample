@@ -1,0 +1,15 @@
+What does your start-up do? 
+Our cloud platform provides affordable, highly customized and scale-able cloud application for manufacturing industires, with lightening speed implementation. We provide the most easiest and hassle free way of  collecting and recording data from your operators, machines and every other nook and corners one can think off in your business. It provides you live and real time data to help you make data driven decision, every time, every day.
+
+Why is your technology innovative?
+Our platform is built on Django, The web framework for perfectionists with deadlines. Any cloud webapp with simple to complex structure and workflow can be built using the user interface of our platform. This make it super fast development, that is the whole database structure and majority of the app could be built right in front of the client and allowing ample time for implementation at the plant level(We are ambitious, we just cant wait release the beta DO IT YOURSELF version of our platform).
+Its special-purpose software to handle as much of the detail work as possible yet allow the builder to specify all the custom forms, reports and business logic that are required.
+This is not just deploying a conventional so called ERP software  on cloud, but an alive software which can be tweaked, scaled with in no time.One can change the business logic, calculations, reports etc. at any time without invalidating old data.
+
+
+What problem does your technology offer a solution to? *
+It is safe to say that its impossible to doubt whether a industry needs ERP/MIS if it want to compete on a global scale and where entire supply chain ecosystem encompassing manufacturers, distributors and retailers is undergoing a business transformation.Given today’s leading-edge capabilities, it’s reasonable to envision and prepare for a data-driven manufacturing of the future where all internal and external activities are connected through the same information platform. Customers, designers, and operators will share information on everything from initial concepts, to installation, to performance feedback throughout the life cycle.
+But the challenge in doing so with manufacturing is that unlike others industries each manufacturing setup at its core has its own way of working and doing business, implementing an off-the-shelf solution would be doomed to fail option most of the time. Finding a custom solution would need a huge budget.Keeping the custom solution upto date with the business is much more a costly affair.
+
+One of the main problems with standard ERP systems is the upgrade problem.As this article points out (http://www.cio.com/article/2421027/enterprise-software/erp--how-and-why-you-need-to-manage-it-differently.html)
+The new version of the ERP system will be different code from the original release that was customized, and all of the customization will have to be retro-fitted into it. This can be as difficult as customizing the software in the first place, i.e. an average time of 16 months and, at high consultant rates, a massive bill

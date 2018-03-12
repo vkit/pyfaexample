@@ -1,0 +1,128 @@
+{% extends 'project_base/admin_base_dashboard.html' %}
+{% load crispy_forms_tags %}
+{% block wrapper %}
+
+
+<!-- <link href="../../../static/css/bootstrap.min.css" rel="stylesheet"> -->
+<link href="../../../static/css/timingfield.css" rel="stylesheet">
+<script src="../../../../../static/vendors/jquery/dist/jquery.min.js"></script>
+<script src="../../../static/js/timingfield.js"></script>
+<!-- message row -->
+<!-- <div class="row pull-right">
+    <div class="col-sm-8">
+      <button class="btn btn-primary" data-toggle="modal" data-target="#addmodal">Add Process Name</button>
+    </div>
+</div>
+                <!-- Modal -->
+      <div class="modal fade" id="addmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+              </button>
+              <h4 class="modal-title" id="myModalLabel">Add Process Name</h4>
+            </div>
+            <div class="modal-body">
+              <form role='form' action="{% url 'process:processnamecreate' %}" method="post">{% csrf_token %}
+                {{form1 | crispy}}
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" action="{% url 'process:processnamecreate' %}" class="btn btn-primary" >Create</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form> 
+
+<form role='form' action="" method="POST">{% csrf_token %}
+<div class="row">
+    <div class="col-md-12 col-sm-12 " >
+    <h2> Job Spec</h2>
+    </div>
+    <div class="col-md-8 col-sm-12">
+        <form role='form' action="" method="POST">{% csrf_token %}
+            {{form | crispy}}
+    </div>
+</div>
+{{ process_set_form.management_form }}
+<div class="row" id="form_panel">
+    {% for form in process_set_form %}
+    <div class='table'>
+        <div class="col-lg-8 col-md-12 col-sm-12">
+            <div class="panel panel-default" >
+                <div class="panel-body">
+                    {% for field in form %}
+                        {{ field.label_tag }} {{ field }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+    <button type="submit" action="" class="btn btn-primary" >Create</button>  
+</form>
+        <button type="button" value="Add More" id="add_more" class="btn btn-primary" >Add More Process</button>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+function cloneMore(selector, type) {
+    var newElement = $(selector).clone(true);
+    var tableIds = [];
+    console.log(newElement)
+    var total = $('#id_' + type + '-TOTAL_FORMS').val();
+    newElement.find(':input').each(function() {
+        if ($(this).attr('name') != null) {
+
+            var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+        var id = 'id_' + name;
+        tableIds.push(id);
+        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+        }
+        
+    });
+    newElement.find('label').each(function() {
+        var newFor = $(this).attr('for').replace('-' + (total-1) + '-','-' + total + '-');
+        $(this).attr('for', newFor);
+    });
+    total++;
+    $('#id_' + type + '-TOTAL_FORMS').val(total);
+    $(selector).after(newElement);
+    // This for timingfield
+    for (var i = tableIds.length - 1; i >= 0; i--) {
+        genrateTimeField(tableIds[i]);
+    }
+    $('.timingfield').next("div.timingfield").css("display","none");
+}
+    
+$('#add_more').click(function() {
+    cloneMore('div.table:last', '{{child_model}}_set');
+});
+
+</script>
+
+<!-- For TimingField -->
+<script type="text/javascript">
+        jQuery(document).ready(function($) {
+            window.genrateTimeField =function (Ids) {
+                var dd = "#" + Ids;
+                if (Ids.endsWith("time")) {
+                    $(dd).timingfield(); 
+                }
+                       
+                    }
+            $("#id_process_set-0-estimated_time").timingfield();
+            $("#id_process_set-0-estimated_setting_time").timingfield();
+            
+        });
+</script>
+
+{% endblock %}

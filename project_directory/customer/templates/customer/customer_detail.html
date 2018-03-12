@@ -1,0 +1,89 @@
+{% extends 'project_base/admin_base_dashboard.html' %}
+{% load crispy_forms_tags %}
+{% block wrapper %}
+<div class="row">
+  <div class="col-sm-12 col-md-12 col-lg-12">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Customer Information</div> 
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-lg-6">
+              <label for="reel_type">Contact Name</label><input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{customer.contact_name}}" readonly>
+              <label for="reel_type">Company Name</label>
+              <input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{customer.company_name}}" readonly>
+              <label for="reel_type">Pan No</label>
+              <input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{customer.pan_no}}" readonly>
+          </div>
+          <div class="col-lg-6">            
+              <label for="reel_type">Tin No</label>
+              <input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{customer.tin_no}}" readonly>
+              <label for="reel_type">Credit Days</label>
+              <input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{customer.credit_days}}" readonly>
+              <label for="reel_type">Service Tax No</label>
+              <input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{customer.service_tax_no}}" readonly>    
+          </div> 
+          <div class="col-lg-6">
+              <label for="reel_type">Tin No</label>
+              <input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{customer.tin_no}}" readonly>
+              
+              <label for="reel_type">Phone Number 1</label>
+              <input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{customer.ph_number1}}" readonly>
+              <label for="reel_type">Phone Number 2</label>
+              <input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{customer.ph_number2}}" readonly>
+          </div>
+          <div class="col-lg-6">
+              
+              <label for="reel_type">Address Line 1</label>
+              <input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{customer.addressline1}}" readonly>
+              <label for="reel_type">Address Line 2</label>
+              <input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{customer.addressline2}}" readonly>
+              <label for="reel_type">Email</label>
+              <input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{customer.email}}" readonly>
+          </div>
+          <div class="col-lg-6">
+              <label for="reel_type">Zipcode</label>
+              <input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{customer.zipcode}}" readonly>
+              <label for="reel_type">City</label>
+              <input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{customer.city}}" readonly>
+              <label for="reel_type">State</label>
+              <input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{customer.state}}" readonly>
+          </div>
+          <div class="col-lg-6">
+              <label for="reel_type">Country</label>
+              <input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{customer.country}}" readonly>                    
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-14 col-md-14 col-lg-14">  <div class="btn pull-right">
+             <button 
+              type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#update">Edit Customer</button></div>
+               <div class="modal fade" id="update" tabindex="-1"   role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+              <div class="modal-content">
+              <div class="modal-header">
+              <button type="button" class="close" data-dismiss="  modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="      myModalLabel">Edit Customer</h4>
+               </div>
+          <div class="modal-body">
+                <form action="{% url 'customer:edit' pk=customer.id %}" method="post">{% csrf_token %}
+                {{form | crispy}}
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success">update</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+<!-- edit customer starts from here -->
+
+
+<!-- edit customer ends here -->
+
+{% endblock %}   

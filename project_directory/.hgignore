@@ -1,0 +1,32 @@
+<<<<<<< local
+syntax: glob
+
+*=0.2.0
+*.log
+*.pyc
+*.db
+*.orig
+*.save
+*.1
+*.gif
+*.templates/home3.html
+*.templates/home_base3.html
+*.DS_Store
+*toolbox/templates/addcutter.html
+.git/**
+htmlcov/**
+#templates/project_base/**
+.uploaded_images/**
+.static/static-only/**
+.static/media/**
+static/media/**
+static-only/**
+uploaded_images/**
+*db.sqlite3
+
+
+=======
+syntax: glob
+*.pyc
+*.pyc.orig
+>>>>>>> other

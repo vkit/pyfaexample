@@ -1,0 +1,15 @@
+This tutorial helps you to learn building webapp application using StandardModel framework. Lets get started with StandardModel using an example application called Polls, a simple polling website.
+
+Creating an app:
+
+App here means an entity that does one perticular activity or seldom a group of activty.I prefer an app to do one perticular activity, which makes it clean, easy to understand and scalable.
+So lets begin by clicking on add app button. A modal appears give name to your app lets say "Poll".
+
+Great so now you a have began naming an app you want to create. An app as said before is an entity that does a specific task. Here in our case it fasilitates to create, moderate and conduct polls. As said so this app need a database layer(which we call transations)to store Questions and optional answers corresponding each questions and also number of votes for it.
+The other layer it needs is display layer wich we call 'Pages'. (Pages are nothing but a pair of url and django view, you would know what I mean if you have knowledge of how django wroks)
+
+To make it clear Page is display layer, you can me it show you data from database layer as HTML page. For example it can be list of Poll questions. Or page which lets you vote.
+
+So lets get started creating transations (database layer) for polls app.
+For typical polling app we need following trasations
+1) Question, this transations  

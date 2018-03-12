@@ -1,0 +1,185 @@
+{% extends 'project_base/admin_base_dashboard.html' %}
+{% load crispy_forms_tags %}
+{% block wrapper %}
+
+<!-- Date time fields starts here -->
+
+<link href="../../../../static/css/bootstrap-datetimepicker.css" rel="stylesheet">
+
+<link rel="stylesheet" href="../../../../static/css/jquery.datepick.css">
+<script src="../../../../static/js/jquery-2.0.2.js"></script>
+
+<script type="text/javascript"
+     src="../../../../static/js/moment/moment.min.js">
+    </script>
+<script type="text/javascript"
+ src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js">
+</script>
+<script type="text/javascript"
+ src="../../../../static/js/bootstrap-datetimepicker.min.js">
+</script>
+
+<!-- Date time fields ends here -->
+
+<link href="../../../../static/css/timingfield.css" rel="stylesheet">
+<script src="../../../../static/js/timingfield.js"></script>
+
+<!-- Breadcrumb starts from here-->
+<div class='container'>
+      <ol class='breadcrumb'>
+        <li><a href="{% url 'jobspec:list' %}">List of Jobspec</a>
+        <li><a href="{% url 'jobspec:detail' pk=jobspec.id %}">Jobspec Detail</a>
+        </li>
+        </li>
+      </ol>
+    </div>
+    <!-- Breadcrumb ends here-->
+
+<!-- detail page of jobspec -->
+
+<div class="row">
+  <div class="col-sm-12 col-md-12 col-lg-12">
+    <div class="panel panel-primary">
+    <div class="panel-heading">JobSpec Information</div> 
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-lg-6">
+            <label for="reel_type">Name</label>
+            <input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{jobspec.name}}" readonly>
+            <label for="reel_type">Customer</label>
+            <input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{jobspec.customer}}" readonly>
+          </div>
+          <div class="col-lg-6">
+            <label for="reel_type">Number</label><input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{jobspec.number}}" readonly>            
+            <label for="reel_type">Delivery Quantity</label>
+            <input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{jobspec.delivery_qty}}" readonly>
+          </div>
+        </div>
+
+        <!-- detail page jobspec ends here -->
+
+        <br>
+
+         <!-- Edit jobspec button starts from here -->
+
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-12">
+              <div class="btn pull-left"><button 
+              type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#update">Edit JobSpec</button></div>
+
+            <!-- Edit jobspec button ends her -->
+             
+             <!--Edit Routecard button starts here  -->
+          <div class="btn pull-right">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#addroutecard">Generate Routecard</button>
+              <!--Edit Routecard button ends here  -->
+          </div>
+        </div>
+      </div>
+        <!--  -->
+        <!-- Modal routecard starts from here -->
+
+        <div class="modal fade" id="addroutecard" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add RouteCard</h4>
+              </div>
+              <div class="modal-body">
+                <form role='form' action="{% url 'jobspec:routecard_generate' pk=jobspec.id %}" method="post">{% csrf_token %}
+                {{form2 | crispy}}
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" action="{% url 'jobspec:routecard_generate' pk=jobspec.id %}" class="btn btn-primary" >Create</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        </form>
+        <!-- Modal add routecard ends here -->
+        <!--  -->
+
+        <!-- Modal edit jobsepc starts from here -->
+
+        <div class="modal fade" id="update" tabindex="-1"   role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="  modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="      myModalLabel">Edit JobSpec</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form action="{% url 'jobspec:edit' pk=jobspec.id %}" method="post">{% csrf_token %}
+                    {{form | crispy}}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+        </div>
+        <!--  -->
+      </div>
+    </div>          
+  </div>
+</div>
+ <!-- Modal edit jobsepc ends here -->
+
+<!-- Add process starts from here -->
+<div class="row">
+  <div class="col-sm-12 col-md-12 col-lg-12">
+    <div class="row pull-right">
+       <button class="btn btn-primary" data-toggle="modal" data-target="#addprocess">Add Process</button>
+    </div>
+  </div>
+</div>
+      <!-- Modal for add process -->
+      <div class="modal fade" id="addprocess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+              <span class="sr-only">Close</span>
+              </button>
+              <h4 class="modal-title" id="myModalLabel">Add Process</h4>
+            </div>
+            <div class="modal-body">
+              <form role='form' action="{% url 'jobspec:processcreate' pk=jobspec.id %}" method="post">{% csrf_token %}
+              {{form1 | crispy}}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" action="{% url 'jobspec:processcreate' pk=jobspec.id %}" class="btn btn-primary" >Create</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div> 
+<!-- Add process ends here -->               
+    
+
+{% include "base/generic_data_grid.html" %}
+
+
+<script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $("#id_estimated_time").timingfield();
+            $("#id_estimated_setting_time").timingfield();
+        });
+</script>
+<!-- jquery for delivery date -->
+<script>
+  $('#id_delivery_date').datetimepicker({
+                format: 'DD/MM/YYYY hh:mm a', 
+                sideBySide: true
+    });
+   
+</script>
+{% endblock %}

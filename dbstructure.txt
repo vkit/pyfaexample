@@ -1,0 +1,7 @@
+Objects Required:
+jobspec
+jobcard
+process
+machines
+operators
+customers

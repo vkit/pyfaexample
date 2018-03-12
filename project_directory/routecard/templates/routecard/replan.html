@@ -1,0 +1,129 @@
+{% extends 'project_base/admin_base_dashboard.html' %}
+{% load crispy_forms_tags %}
+{% block wrapper %}
+
+<!-- Calender -->
+<link href="../../../static/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+<link href="../../../static/vendors/fullcalendar/dist/fullcalendar.css" rel="stylesheet">
+<link href="../../../static/vendors/fullcalendar/dist/fullcalendar.print.css" rel="stylesheet" media="print">
+
+<!-- DateTime picker -->
+<link href="../../../static/css/bootstrap-datetimepicker.css" rel="stylesheet">
+
+<link rel="stylesheet" href="../../../static/css/jquery.datepick.css">
+<script src="../../../static/js/jquery-2.0.2.js"></script>
+
+<script type="text/javascript"
+     src="../../../static/js/moment/moment.min.js">
+    </script>
+<script type="text/javascript"
+ src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js">
+</script>
+<script type="text/javascript"
+ src="../../../static/js/bootstrap-datetimepicker.min.js">
+</script>
+
+<div class="row">
+  <div class="col-md-12 col-sm-12 col-lg-12">
+    <div style="position: relative">
+        <form role='form' action="" method="post">
+        {% csrf_token %}
+        <div class="col-lg-6">
+        <input id="routecard" name="routecard" value="{{routecard}}" hidden="" >
+        <input id="plan" name="plan" value="{{plan}}" hidden="" >
+        <input id="machine" name="machine" value="{{machine.id.hex}}" hidden="" >
+          
+          <input  class="form-control" id="start_time" type="text" name="start_time">
+          <label for="start_time">Select start time</label>
+        </div>
+        <div class="col-lg-6">
+          <button type="submit" action="" class="btn btn-warning" >Update</button>
+        </div> 
+        </form>
+    </div>
+  </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>{{machine}} Machine Schedules</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Settings 1</a>
+                            </li>
+                            <li><a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                <div id='calendar'></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Datetime Picker -->
+<script>
+var input = {{machine.schedule_list}}
+var timeInterval = eval({{machine.schedule_list}});
+$('#start_time').datetimepicker({
+                    disabledTimeIntervals: timeInterval,
+                    format: 'DD/MM/YYYY hh:mm a', 
+                    // sideBySide: true
+                  });
+   
+</script>
+
+<script>
+  $(document).ready(function() {
+    
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,basicWeek,basicDay'
+      },
+      // defaultDate: '2016-09-12',
+      navLinks: true, // can click day/week names to navigate views
+      editable: false,
+      eventLimit: true, // allow "more" link when too many events
+      events: [
+      {% for plan in machine.plan_set.all %}
+        {% if plan.formated_time %}
+        {
+          title: '{{plan}}',
+          start: {{plan.formated_time}},
+          end: {{plan.formated_end_time}},
+        },
+        {% endif %}
+      {% endfor %}  
+      ],
+      eventMouseover: function(calEvent, jsEvent, view) {
+
+        alert('Process starts at: ' + calEvent.start.format("YYYY-MM-DD HH:mm Z") + ' Expected Ending ' + calEvent.end.format("YYYY-MM-DD HH:mm Z"));
+        // change the border color just for fun
+        $(this).css('border-color', 'red');
+
+      }
+    });
+      
+  });
+$('#start_time').keypress(function(e) {
+    e.preventDefault();
+});
+</script>
+{% endblock %}

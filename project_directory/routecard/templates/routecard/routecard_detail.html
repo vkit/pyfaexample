@@ -1,0 +1,171 @@
+{% extends 'project_base/admin_base_dashboard.html' %}
+{% load crispy_forms_tags %}
+{% block wrapper %}
+
+<!-- DateTime picker -->
+<link href="../../../static/css/bootstrap-datetimepicker.css" rel="stylesheet">
+
+<link rel="stylesheet" href="../../../static/css/jquery.datepick.css">
+<script src="../../../static/js/jquery-2.0.2.js"></script>
+
+<script type="text/javascript"
+     src="../../../static/js/moment/moment.min.js">
+    </script>
+<script type="text/javascript"
+ src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js">
+</script>
+<script type="text/javascript"
+ src="../../../static/js/bootstrap-datetimepicker.min.js">
+</script>
+
+<!-- Breadcrumb starts from here-->
+<div class='container'>
+      <ol class='breadcrumb'>
+        <li><a href="{% url 'routecard:list' %}">List of Routecard</a>
+        <li><a href="{% url 'routecard:detail' pk=routecard.id %}">Routecard Detail</a>
+        </li>
+        </li>
+      </ol>
+    </div>
+    <!-- Breadcrumb ends here-->
+
+<!-- detail page for routecard -->
+<div class="row">
+  <div class="col-sm-12 col-md-12 col-lg-12">
+    <div class="panel panel-primary">
+        <div class="panel-heading"><h4>Route Card</h4></div> 
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-lg-6">
+              <label for="reel_type">Number</label><input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{routecard.number}}" readonly>
+              <label for="reel_type">JobSpec</label>
+              <input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{routecard.jobspec}}" readonly>
+          </div>    
+          <div class="col-lg-6">    
+              <label for="reel_type">Quantity</label>
+              <input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{routecard.quantity}}" readonly>
+          </div>
+        </div>
+
+        <!-- edit button  routecard starts from here -->
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-12">
+          <div class="btn pull-right"><button 
+              type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#update">Edit RouteCard</button></div>
+               <div class="modal fade" id="update" tabindex="-1"   role="dialog" aria-labelledby="myModalLabel">
+               <div class="modal-dialog" role="document">
+               <div class="modal-content">
+               <div class="modal-header">
+               <button type="button" class="close" data-dismiss="  modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+               <h4 class="modal-title" id="      myModalLabel">Edit Routecard</h4>
+               </div>
+            <div class="modal-body">
+                <form action="{% url 'routecard:edit_routecard' pk=routecard.id %}" method="post">{% csrf_token %}
+                {{form1 | crispy}}
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success">update</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </form>
+            </div>
+            </div>
+          </div>
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
+
+<div class="row">
+  <div class="col-sm-12 col-lg-12 col-md-12">
+    <div class="btn pull-right"><button 
+              type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#addplan">New Plan</button>
+              </div>
+  </div>
+</div>           
+  
+  <!-- edit routecard ends here  -->
+
+<!--Edit jquery starts from here -->
+<div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Select Machine</h4>
+      </div>
+      <div class="modal-body">
+        <form role='form' action="{% url 'routecard:replan' %}" method="get">
+        {% csrf_token %}
+        <input id="plan" name="plan" hidden="" >
+        <input id="routecard" name="routecard" value="{{routecard.id.hex}}" hidden="" >
+          {{form | crispy}}
+        </div>
+        <div class="modal-footer">
+          
+          <button type="submit" action="" class="btn btn-warning" >Go</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<!-- Modal End -->
+
+<!-- Modal -->
+      <div class="modal fade" id="addplan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+              </button>
+              <h4 class="modal-title" id="myModalLabel">Add Plan</h4>
+            </div>
+            <div class="modal-body">
+              <form role='form' action="{% url 'routecard:plancreate' routecard.id.hex %}" method="post">{% csrf_token %}
+                {{plan_form | crispy}}
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" action="{% url 'customer:create' %}" class="btn btn-primary" >Create</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+  <!-- Modal End -->
+
+<!-- Modal for print plan -->
+
+  <div class="row">
+      <div class='col-sm-12 col-md-12 col-lg-12' >   
+        <form action="{% url 'routecard:printplan' pk=routecard.id %}" method='post'>
+         {% csrf_token %}
+         <button type="submit" class="btn btn-primary" >Print Plan </button>
+        </form>
+        <br>
+      </div>
+    </div>
+    <!-- Modal for print plan ends -->
+
+{% include "base/generic_data_grid.html" %}
+
+<script type="text/javascript">
+document.getElementById("id_machine").required = true;
+</script>
+
+<script type="text/javascript">
+  function getMethod(edit) {
+    var plan = edit
+    $('#plan').val(plan)
+   return false
+}
+
+</script>
+
+{% endblock %}

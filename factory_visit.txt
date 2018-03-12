@@ -1,0 +1,13 @@
+17/09/2016:
+
+Master data for part no and name, wiht customers
+
+If actual time is moved all other plans should me moved
+
+Same process in two machine
+
+
+30/09/2016:
+
+List of machine should be show to operators: List of plan should be show as detail
+

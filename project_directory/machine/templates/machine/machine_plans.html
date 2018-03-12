@@ -1,0 +1,141 @@
+{% extends 'project_base/admin_base_dashboard.html' %}
+{% load crispy_forms_tags %}
+{% block wrapper %}
+<!-- Calender -->
+<link href="../../../static/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+<link href="../../../static/vendors/fullcalendar/dist/fullcalendar.css" rel="stylesheet">
+<link href="../../../static/vendors/fullcalendar/dist/fullcalendar.print.css" rel="stylesheet" media="print">
+
+<!-- Breadcrumb starts from here-->
+<div class='container'>
+      <ol class='breadcrumb'>
+        <li><a href="{% url 'machine:list' %}">List of Machines</a>
+        <li><a href="{% url 'machine:machine_plans' pk=machine.id %}">Machine Detail</a>
+        </li>
+        </li>
+      </ol>
+    </div>
+    <!-- Breadcrumb ends here-->
+
+<!-- machine detail page -->
+<div class="row">
+  <div class="col-sm-12 col-md-12 col-lg-12">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Machine Information</div> 
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-lg-6">            
+            <label for="reel_type">Name </label>
+            <input  class="form-control" id="reel_type" type="text" name="reel_type" value="{{machine.name}}" readonly>
+          </div>  
+        </div>
+
+        <!-- machine detail page ends here -->
+
+          <!-- Edit machine starts from here-->
+         <br>
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <div class="btn pull-left"><button 
+              type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#update">Edit Machine</button></div>
+            </div>  
+          </div>    
+      </div>
+    </div>
+  </div>
+</div> 
+      <div class="modal fade" id="update" tabindex="-1"   role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="  modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="      myModalLabel">Edit Machine</h4>
+                  </div>
+              <div class="modal-body">
+                <form action="{% url 'machine:edit' pk=machine.id %}" method="post">{% csrf_token %}
+                {{form | crispy}}
+              </div>
+                <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Edit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>                   
+           
+    <!-- Edit machine ends here-->
+
+   <!-- Machine Schedule starts from here-->
+   
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Machine Schedule</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                <div id='calendar'></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include "base/generic_data_grid.html" %}
+
+<script type="text/javascript"
+     src="../../../static/js/moment/moment.min.js">
+    </script>
+
+<script>
+  $(document).ready(function() {
+    
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,basicWeek,basicDay'
+      },
+      navLinks: true, // can click day/week names to navigate views
+      editable: false,
+      eventLimit: true, // allow "more" link when too many events
+      events: [
+      {% for plan in object_list %}
+      {% if plan.formated_time %}
+        {
+          title: '{{plan}}',
+          start: {{plan.formated_time}},
+          end: {{plan.formated_end_time}},
+          {% if plan.is_active %}
+          color: 'red',
+          {% endif %}
+        },
+      {% endif %}
+      {% endfor %}  
+      ],
+      eventMouseover: function(calEvent, jsEvent, view) {
+
+        alert('Process starts at: ' + calEvent.start.format("YYYY-MM-DD HH:mm Z") + 'Expected Ending' + calEvent.end.format("YYYY-MM-DD HH:mm Z"));
+        // change the border color just for fun
+        $(this).css('border-color', 'red');
+
+      }
+    });
+      
+  });
+$('#start_time').keypress(function(e) {
+    e.preventDefault();
+});
+</script>
+{% endblock %}

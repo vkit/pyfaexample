@@ -1,0 +1,10 @@
+{% extends 'project_base/admin_base_dashboard.html' %}
+{% load crispy_forms_tags %}
+{% block wrapper %}
+<div class="row pull-right">
+  	<div class="col-sm-8">
+    	<a class="btn btn-primary" href="{% url 'jobspec:create' %}"> Add JobSpec</a>
+    </div>
+</div>
+{% include "base/generic_data_grid.html" %}
+{% endblock %}
